@@ -7,7 +7,7 @@ Elm.Native.Crypto.make = function(localRuntime) {
         return localRuntime.Native.Crypto.values
     }
 
-    var Task = Elm.Task.make(localRuntime)
+    var Task = Elm.Native.Task.make(localRuntime)
 
     var digestAlgorithmCtor = {
         'Sha1': 'SHA-1',
