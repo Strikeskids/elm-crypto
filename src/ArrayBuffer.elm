@@ -42,7 +42,7 @@ encode =
 `Nothing` is returned. Otherwise, `Just String` corresponding to the decoded
 `ArrayBuffer`.
 
-    decode Hex (encode Utf8 "Hello") -- Just "48656b6b6f"
+    decode Hex (encode Utf8 "Hello") -- Just "48656c6c6f"
 
     decode Utf8 (encode Hex "48656b6b6f") -- Just "Hello"
 
