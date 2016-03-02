@@ -1,0 +1,11 @@
+{
+    "version": "1.0.0",
+    "summary": "Use web crypto in elm.",
+    "repository": "https://github.com/Strikeskids/elm-crypto.git",
+    "source-directories": [
+        "src"
+    ],
+    "dependencies": [
+    ],
+    "elm-version": "0.16.0 <= v < 0.17.0"
+}
