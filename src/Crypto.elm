@@ -1,12 +1,12 @@
 module Crypto
-    ( digest
+    ( digest, digestString
     , DigestAlgorithm(..)
     , Error(..)
     ) where
 
 {-| This module provides an elm wrapper around the SubtleCrypto web API
 
-@docs DigestAlgorithm, digest
+@docs DigestAlgorithm, digest, digestString
 
 @docs Error
 
