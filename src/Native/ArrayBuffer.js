@@ -8,6 +8,7 @@ Elm.Native.ArrayBuffer.make = function(localRuntime) {
     }
 
     var Maybe = Elm.Maybe.make(localRuntime)
+    var List = Elm.Native.List.make(localRuntime)
 
     var utfLabelMapping = {
         'Utf16Be': 'utf-16be',
@@ -94,5 +95,9 @@ Elm.Native.ArrayBuffer.make = function(localRuntime) {
 
     function length(buf) {
         return buf.byteLength
+    }
+
+    function toList(buf) {
+        return List.fromArray(new Uint8Array(buf))
     }
 }

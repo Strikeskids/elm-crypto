@@ -59,3 +59,14 @@ decode =
 length : ArrayBuffer -> Int
 length = 
     Native.ArrayBuffer.length
+
+{-| Turn an `ArrayBuffer` into an `Int List` of the individual bytes in the
+buffer
+
+    Maybe.map toList (decode Utf8 "abcd")
+        -- results in [97, 98, 99, 100]
+
+-}
+toList : ArrayBuffer -> Int List
+toList = 
+    Native.ArrayBuffer.toList
