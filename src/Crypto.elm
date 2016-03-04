@@ -12,9 +12,11 @@ module Crypto
 
 -}
 
+import Native.Crypto
+
 import ArrayBuffer exposing ( ArrayBuffer, encode )
 import Task exposing ( Task )
-import Native.Crypto
+import Maybe exposing ( Maybe(..) )
 
 {-| Describes available types of hash digests to compute
 -}
@@ -49,6 +51,17 @@ digestString algo s =
         digester = digest algo
     in
         encoder `Task.andThen` digester
+
+{-| Generate cryptographically secure random data (for crypto functions).
+Could fail if too much randomness is requested (according to Web Crypto spec)
+
+    randomData 16
+        -- results in `Just buf` containing 16 cryptographically-random bytes
+
+-}
+randomData : Int -> Maybe ArrayBuffer
+randomData =
+    Native.Crypto.randomData
 
 {-| The different possible failures for crypto promises
 -}

@@ -8,6 +8,7 @@ Elm.Native.Crypto.make = function(localRuntime) {
     }
 
     var Task = Elm.Native.Task.make(localRuntime)
+    var Maybe = Elm.Maybe.make(localRuntime)
 
     var digestAlgorithmCtor = {
         'Sha1': 'SHA-1',
@@ -18,6 +19,7 @@ Elm.Native.Crypto.make = function(localRuntime) {
 
     return localRuntime.Native.Crypto.values = {
         digest: F2(digest),
+        randomData: randomData,
     }
 
     function digest(algoType, buf) {
@@ -29,5 +31,15 @@ Elm.Native.Crypto.make = function(localRuntime) {
                     callback(Task.fail({ ctor: 'UnknownCryptoError' }))
                 })
         })
+    }
+
+    function randomData(size) {
+        var buf = new Uint8Array(size)
+        try {
+            crypto.getRandomValues(buf)
+            return Maybe.Just(buf)
+        } catch (e) {
+            return Maybe.Nothing
+        }
     }
 }
