@@ -70,3 +70,16 @@ buffer
 toList : ArrayBuffer -> Int List
 toList = 
     Native.ArrayBuffer.toList
+
+{-| Turn an `Int List` of bytes (0-255) into an `ArrayBuffer`
+
+    Maybe.andThen (fromList [97, 98, 99, 100]) (decode Utf8)
+        -- results in Just "abcd"
+
+    fromList [500, 300, 300]
+        -- results in Nothing (out of bounds)
+    
+-}
+fromList : Int List -> Maybe ArrayBuffer
+fromList =
+    Native.ArrayBuffer.fromList

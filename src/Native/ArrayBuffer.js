@@ -8,7 +8,8 @@ Elm.Native.ArrayBuffer.make = function(localRuntime) {
     }
 
     var Maybe = Elm.Maybe.make(localRuntime)
-    var List = Elm.Native.List.make(localRuntime)
+    var NativeList = Elm.Native.List.make(localRuntime)
+    var List = Elm.List.make(localRuntime)
 
     var utfLabelMapping = {
         'Utf16Be': 'utf-16be',
@@ -98,6 +99,19 @@ Elm.Native.ArrayBuffer.make = function(localRuntime) {
     }
 
     function toList(buf) {
-        return List.fromArray(new Uint8Array(buf))
+        return NativeList.fromArray(new Uint8Array(buf))
+    }
+
+    function fromList(xs) {
+        var length = List.length(xs)
+        var arr = new Uint8Array(length)
+        for (var i=0; i<length; ++i, xs = xs._1) {
+            if (0 <= xs._0 <= 255) {
+                arr[i] = xs._0;
+            } else {
+                return Maybe.Nothing
+            }
+        }
+        return Maybe.Just(arr.buffer)
     }
 }
