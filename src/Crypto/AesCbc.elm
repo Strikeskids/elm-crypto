@@ -1,7 +1,6 @@
 module AesCbc
     ( CryptoKey, encrypt, decrypt
-    , generateKey, importKey, exportKey
-    , wrapKey, unwrapKey
+    , KeySize(..), generateKey, importRawKey, exportRawKey
     ) where
 
 {-| This module wraps the AES-CBC mode of encryption in the web crypto API
@@ -13,8 +12,6 @@ module AesCbc
 @docs KeySize
 
 @docs generateKey, importKey, exportKey
-
-@docs wrapKey, unwrapKey
 
 -}
 
@@ -36,6 +33,7 @@ sizeToInt Aes192 = 192
 sizeToInt Aes256 = 256
 
 cipherName = "AES-CBC"
+cipherActions = ["encrypt", "decrypt", "wrapKey", "unwrapKey"]
 
 {-| Encrypt some data using AES-CBC.
 
@@ -72,3 +70,41 @@ decrypt iv =
         { name = cipherName
         , iv = iv
         }
+
+{-| Generate a new AES-CBC secret key
+
+    generate Aes128
+        -- Will evaluate to a new CryptoKey representing a 128 AES secret key
+
+-}
+generateKey : KeySize -> Task Crypto.Error CryptoKey
+generateKey size =
+    Native.Crypto.generateKey
+        { name = cipherName
+        , length = sizeToInt size
+        }
+        True cipherActions
+
+{-| Import a raw AES-CBC secret key
+
+    importRawKey buf
+        -- Will evaluate to the AES-CBC key contained in buf
+
+-}
+importRawKey : ArrayBuffer -> Task Crypto.Error CryptoKey
+importRawKey =
+    Native.Crypto.importKey "raw"
+        { name = cipherName
+        }
+        True cipherActions
+
+{-| Export an AES-CBC secret key in the raw buffer format
+
+    exportRawKey key
+        -- Will evaluate to an ArrayBuffer containing the raw representation
+        -- of key
+
+-}
+exportRawKey : CryptoKey -> Task Crypto.Error ArrayBuffer
+exportRawKey =
+    Native.Crypto.exportKey "raw"
