@@ -83,3 +83,14 @@ toList =
 fromList : Int List -> Maybe ArrayBuffer
 fromList =
     Native.ArrayBuffer.fromList
+
+{-| An impure function that clears an ArrayBuffer. This should be used if the
+ArrayBuffer in question contains sensitive data
+
+    zero buf -- Returns ()
+        -- Modify buf in place, storing zeroes into every byte
+
+-}
+zero : ArrayBuffer -> ()
+zero = 
+    Native.ArrayBuffer.zero
