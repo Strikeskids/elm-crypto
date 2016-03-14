@@ -22,6 +22,7 @@ Elm.Native.ArrayBuffer.make = function(localRuntime) {
         decode: F2(decode),
         length: length,
         zero: zero,
+        xor: F2(xor),
     }
 
     function encode(encoding, s) {
@@ -118,8 +119,22 @@ Elm.Native.ArrayBuffer.make = function(localRuntime) {
 
     function zero(buf) {
         var arr = new Uint8Array(buf)
-        for (var i=0; i<buf.length; ++i) {
+        for (var i=0, len=buf.length; i<len; ++i) {
             buf[i] = 0
         }
+    }
+
+    function xor(a, b) {
+        if (a.length > b.length) {
+            var tmp = a; a = b; b = tmp
+        }
+        var len = b.length
+        var result = new Uint8Array(len)
+
+        for (var i=0; i<len; ++i) {
+            result[i] = a[i] ^ b[i]
+        }
+
+        return result.buffer
     }
 }

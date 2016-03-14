@@ -94,3 +94,13 @@ ArrayBuffer in question contains sensitive data
 zero : ArrayBuffer -> ()
 zero = 
     Native.ArrayBuffer.zero
+
+{-| Xor the two buffers together, repeating the smaller buffer as necessary
+
+    xor oneTimeKey plaintext
+        -- Computes the ciphertext for a simple one-time pad
+
+-}
+xor : ArrayBuffer -> ArrayBuffer -> ArrayBuffer
+xor = 
+    Native.ArrayBuffer.xor
